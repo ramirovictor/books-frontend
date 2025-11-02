@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Plus, Pencil, Trash2, RefreshCcw, BookOpen, X, Github, Search } from "lucide-react";
 import { Toaster, toast } from "sonner";
 import { clsx } from "clsx";
@@ -244,14 +245,30 @@ export default function App() {
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Books</h1>
           </div>
-          <button
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            onClick={openCreate}
-            aria-label="Create new book"
-          >
-            <Plus className="w-4 h-4" />
-            <span className="hidden sm:inline">New</span>
-          </button>
+          <div className="flex items-center gap-6">
+            <nav className="hidden sm:flex items-center gap-4">
+              <Link
+                to="/"
+                className="text-sm font-medium text-indigo-600 transition-colors"
+              >
+                Books
+              </Link>
+              <Link
+                to="/about"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                About
+              </Link>
+            </nav>
+            <button
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={openCreate}
+              aria-label="Create new book"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">New</span>
+            </button>
+          </div>
         </div>
       </header>
 

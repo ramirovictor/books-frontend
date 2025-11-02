@@ -52,7 +52,7 @@ export default function About() {
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl">
             A modern full-stack CRUD application built with Spring Boot and React, featuring HTTPS,
-            H2 database, Swagger documentation, and a premium UI design.
+            H2 database, Swagger documentation, and responsive UI with accessibility support.
           </p>
         </div>
 

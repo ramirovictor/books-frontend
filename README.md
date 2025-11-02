@@ -13,25 +13,13 @@ Modern, responsive frontend for a full-stack book management system. Built with 
 
 ## 📋 Overview
 
-This is the frontend client for the Books API, a CRUD application that allows users to:
+Frontend client for the Books API. A full-stack CRUD application that allows users to:
 - View and search books by title
 - Create new book entries
 - Edit existing books
 - Delete books with custom confirmation dialog
 
-The UI features a modern design with vibrant colors, smooth animations, full accessibility support, and responsive layouts for both desktop and mobile devices.
-
----
-
-## ✨ Key Features
-
-- ✅ **Full CRUD operations** with real-time search
-- 🎨 **Modern UI** with vibrant color palette (Indigo, Amber, Rose, Emerald)
-- 📱 **Fully responsive** (desktop table view, mobile card view)
-- ♿ **Accessible** (ARIA labels, keyboard navigation, focus management)
-- 🎯 **Custom confirmation dialogs** (no native browser alerts)
-- 🍞 **Toast notifications** for all actions
-- ✨ **Premium design** with subtle animations and elevated shadows
+Built with React 19, TypeScript, Tailwind CSS v4, and React Router.
 
 ---
 
@@ -101,6 +89,9 @@ The backend uses a **self-signed SSL certificate**. Before using the frontend, y
 | `npm run build` | Build for production (output: `dist/`) |
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Run ESLint to check code quality |
+| `npm run test` | Run unit tests with Vitest (watch mode) |
+| `npm run test:run` | Run unit tests once |
+| `npm run test:ui` | Run tests with Vitest UI |
 
 ---
 
@@ -129,19 +120,10 @@ The app consumes the following endpoints from the backend:
 
 ---
 
-## 👤 Author
-
-**Victor Ramiro**
-- GitHub: [@ramirovictor](https://github.com/ramirovictor)
-- Backend: [books-api](https://github.com/ramirovictor/books-api)
-- Frontend: [books-frontend](https://github.com/ramirovictor/books-frontend)
-
----
-
 ## 📝 License
 
 This project is part of a portfolio and is available under the MIT License.
 
 ---
 
-**Made with ❤️ using React, Vite, TypeScript, and Tailwind CSS**
+**Made with using React, Vite, TypeScript, and Tailwind CSS**

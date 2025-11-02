@@ -227,9 +227,9 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-b from-white to-indigo-50/40 flex flex-col">
+    <div className="min-h-screen relative bg-gradient-to-b from-white via-indigo-50/30 to-indigo-100/50 flex flex-col">
       {/* Premium radial gradient background */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_400px_at_top,rgba(99,102,241,0.08),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_400px_at_top,rgba(99,102,241,0.15),transparent)]" />
 
       <Toaster richColors position="top-right" />
 

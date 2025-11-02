@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useRef } from "react";
-import { Plus, Pencil, Trash2, RefreshCcw, BookOpen, X, Github } from "lucide-react";
+import { Plus, Pencil, Trash2, RefreshCcw, BookOpen, X, Github, Search } from "lucide-react";
 import { Toaster, toast } from "sonner";
 import { clsx } from "clsx";
 import type { Book } from "./types";
@@ -55,7 +55,7 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
             {title}
           </h2>
           <button
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             onClick={onClose}
             aria-label="Close modal"
           >
@@ -111,14 +111,14 @@ function ConfirmDeleteDialog({ isOpen, bookTitle, onConfirm, onCancel }: Confirm
           </p>
           <div className="flex items-center justify-end gap-3">
             <button
-              className="px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+              className="px-4 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all active:scale-[.98] focus:outline-none focus:ring-2 focus:ring-gray-400"
               onClick={onCancel}
               aria-label="Cancel deletion"
             >
               Cancel
             </button>
             <button
-              className="px-4 py-2 rounded-xl bg-rose-600 text-white hover:bg-rose-700 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+              className="px-4 py-2 rounded-xl bg-rose-600 text-white hover:bg-rose-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
               onClick={onConfirm}
               aria-label="Confirm deletion"
             >
@@ -227,13 +227,16 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+    <div className="min-h-screen relative bg-gradient-to-b from-white to-indigo-50/40 flex flex-col">
+      {/* Premium radial gradient background */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_400px_at_top,rgba(99,102,241,0.08),transparent)]" />
+
       <Toaster richColors position="top-right" />
 
       {/* ========================================
           STICKY HEADER WITH VIBRANT COLORS
           ======================================== */}
-      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-lg border-b border-gray-200 shadow-sm">
+      <header className="relative z-20 sticky top-0 bg-white/80 backdrop-blur-lg border-b border-gray-200 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 text-white shadow-md">
@@ -242,7 +245,7 @@ export default function App() {
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Books</h1>
           </div>
           <button
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             onClick={openCreate}
             aria-label="Create new book"
           >
@@ -255,19 +258,23 @@ export default function App() {
       {/* ========================================
           MAIN CONTENT
           ======================================== */}
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8">
+      <main className="relative flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8">
         {/* Filters */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
-          <input
-            className="flex-1 border border-gray-300 rounded-2xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-gray-400"
-            placeholder="Search by title..."
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            aria-label="Search books by title"
-          />
+          {/* Search input with embedded icon */}
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              className="w-full pl-10 pr-4 py-2.5 ring-1 ring-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-400 transition-all placeholder:text-gray-400 bg-white"
+              placeholder="Search by title..."
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              aria-label="Search books by title"
+            />
+          </div>
           <button
             className={clsx(
-              "inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-gray-300 rounded-2xl font-medium text-gray-700 hover:bg-gray-50 transition-all focus:outline-none focus:ring-2 focus:ring-gray-400",
+              "inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2",
               loading && "opacity-60 cursor-not-allowed"
             )}
             onClick={load}
@@ -280,8 +287,8 @@ export default function App() {
           </button>
         </div>
 
-        {/* Table - Desktop */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hidden sm:block">
+        {/* Table - Desktop with premium shadow */}
+        <div className="bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,.06)] border border-gray-200 overflow-hidden hidden sm:block">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
@@ -297,8 +304,8 @@ export default function App() {
                   <tr
                     key={b.id}
                     className={clsx(
-                      "hover:bg-indigo-50/50 transition-colors",
-                      i % 2 === 0 ? "bg-white" : "bg-gray-50/30"
+                      "hover:bg-indigo-50/60 transition-colors",
+                      i % 2 === 1 && "bg-gray-50/60"
                     )}
                   >
                     <td className="px-6 py-4 font-semibold text-gray-900 whitespace-normal break-words">
@@ -311,7 +318,7 @@ export default function App() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2 flex-wrap">
                         <button
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 text-white font-medium hover:bg-amber-600 transition-all shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-1 whitespace-nowrap"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 text-white font-medium hover:bg-amber-600 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-1 whitespace-nowrap"
                           onClick={() => openEdit(b)}
                           aria-label={`Edit book ${b.title}`}
                         >
@@ -319,7 +326,7 @@ export default function App() {
                           <span className="text-sm">Edit</span>
                         </button>
                         <button
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-600 text-white font-medium hover:bg-rose-700 transition-all shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-1 whitespace-nowrap"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-600 text-white font-medium hover:bg-rose-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-1 whitespace-nowrap"
                           onClick={() => handleDeleteClick(b)}
                           aria-label={`Delete book ${b.title}`}
                         >
@@ -332,11 +339,22 @@ export default function App() {
                 ))}
                 {filtered.length === 0 && (
                   <tr>
-                    <td className="px-6 py-12 text-center text-gray-500" colSpan={4}>
-                      <div className="flex flex-col items-center gap-2">
-                        <BookOpen className="w-12 h-12 text-gray-300" />
-                        <p className="text-lg font-medium">No books found</p>
-                        <p className="text-sm text-gray-400">Try adjusting your search or add a new book</p>
+                    <td className="px-6 py-16 text-center text-gray-500" colSpan={4}>
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="p-4 rounded-full bg-indigo-50">
+                          <BookOpen className="w-12 h-12 text-indigo-300" />
+                        </div>
+                        <div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1">No books found</p>
+                          <p className="text-sm text-gray-500">Try adjusting your search or add a new book</p>
+                        </div>
+                        <button
+                          onClick={openCreate}
+                          className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                          <Plus className="w-4 h-4" />
+                          Add your first book
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -349,7 +367,7 @@ export default function App() {
         {/* Cards - Mobile (< 640px) */}
         <div className="sm:hidden space-y-4">
           {filtered.map((b) => (
-            <div key={b.id} className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5">
+            <div key={b.id} className="bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,.06)] border border-gray-200 p-5">
               <h3 className="font-bold text-lg text-gray-900 mb-2">{b.title}</h3>
               <p className="text-gray-600 text-sm mb-1">
                 <span className="font-medium">Author:</span> {b.author}
@@ -359,7 +377,7 @@ export default function App() {
               </p>
               <div className="flex items-center gap-2">
                 <button
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-amber-500 text-white font-medium hover:bg-amber-600 transition-all shadow-sm"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-amber-500 text-white font-medium hover:bg-amber-600 transition-all active:scale-[.98] shadow-sm hover:shadow"
                   onClick={() => openEdit(b)}
                   aria-label={`Edit book ${b.title}`}
                 >
@@ -367,7 +385,7 @@ export default function App() {
                   <span>Edit</span>
                 </button>
                 <button
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-rose-600 text-white font-medium hover:bg-rose-700 transition-all shadow-sm"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-rose-600 text-white font-medium hover:bg-rose-700 transition-all active:scale-[.98] shadow-sm hover:shadow"
                   onClick={() => handleDeleteClick(b)}
                   aria-label={`Delete book ${b.title}`}
                 >
@@ -378,10 +396,19 @@ export default function App() {
             </div>
           ))}
           {filtered.length === 0 && (
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 text-center">
-              <BookOpen className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-lg font-medium text-gray-900 mb-1">No books found</p>
-              <p className="text-sm text-gray-500">Try adjusting your search or add a new book</p>
+            <div className="bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,.06)] border border-gray-200 p-8 text-center">
+              <div className="p-4 rounded-full bg-indigo-50 w-fit mx-auto mb-4">
+                <BookOpen className="w-12 h-12 text-indigo-300" />
+              </div>
+              <p className="text-lg font-semibold text-gray-900 mb-1">No books found</p>
+              <p className="text-sm text-gray-500 mb-4">Try adjusting your search or add a new book</p>
+              <button
+                onClick={openCreate}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <Plus className="w-4 h-4" />
+                Add your first book
+              </button>
             </div>
           )}
         </div>
@@ -390,7 +417,7 @@ export default function App() {
       {/* ========================================
           SIMPLE FOOTER
           ======================================== */}
-      <footer className="border-t border-gray-200 bg-white/50 backdrop-blur-sm">
+      <footer className="relative border-t border-gray-200 bg-white/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-600">
             <p>© 2025 Books API - Full Stack Project</p>
@@ -435,7 +462,7 @@ export default function App() {
               id="title"
               ref={firstInputRef}
               required
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+              className="w-full ring-1 ring-gray-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               placeholder="e.g. Clean Code"
@@ -449,7 +476,7 @@ export default function App() {
             <input
               id="author"
               required
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+              className="w-full ring-1 ring-gray-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
               value={form.author}
               onChange={(e) => setForm({ ...form, author: e.target.value })}
               placeholder="e.g. Robert C. Martin"
@@ -466,7 +493,7 @@ export default function App() {
               type="number"
               min={0}
               step={0.01}
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+              className="w-full ring-1 ring-gray-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
               value={form.price}
               onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
               placeholder="0.00"
@@ -478,7 +505,7 @@ export default function App() {
           <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-200">
             <button
               type="button"
-              className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+              className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-all active:scale-[.98] focus:outline-none focus:ring-2 focus:ring-gray-400"
               onClick={closeModal}
               aria-label="Cancel and close modal"
             >
@@ -488,7 +515,7 @@ export default function App() {
               type="submit"
               disabled={saving}
               className={clsx(
-                "px-6 py-2.5 rounded-xl text-white font-medium bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+                "px-6 py-2.5 rounded-xl text-white font-medium bg-indigo-600 hover:bg-indigo-700 transition-all active:scale-[.98] shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
                 saving && "opacity-60 cursor-not-allowed"
               )}
               aria-label="Save book"
